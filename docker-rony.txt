@@ -1,0 +1,197 @@
+sudo yum install -y yum-utils
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+
+
+sudo yum install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+
+
+
+# docker run -d nginx
+# docker ps
+# docker inspect {con ID}    -------for ip address of the container or full info
+# docker network ls     --------list of the network
+# docker network  create --subnet "{subnet range}/16" {neme}    ------for create your own network
+# docker run -d --network {n/w name} nginx   --------to create the container in your network
+
+>>>>>> prune is used to delete the unused network <<<<<<<<<
+
+
+
+
+# docker run -d -p 80:80 --name {container nmae} {img-name}
+# docker volume ls   ------to list the volume in docker
+# docker volume create {volume name}   -------to create the seperate volume (i.e. that is called persistance volme)
+ 
+to attach the alredy created volume
+# docker run -d -v {volume name}:/mnt nginx
+# docker exec -it {container ID} bash
+    for checking # df -hT
+
+
+# docker rm -f 'docker ps -q -a'
+
+naming convention  ===>> (user name)/(repo name):(version)
+
+
+#docker commit {container name}     ---------to create the img from the container
+# docker tag {img ID} (user name)/(repo name):(version)     -----to give the name the of img
+
+------->>>>>> to push the img to the dockerhub repo the img name and the repo name must be same 
+
+# docker login
+# docker push (user name)/(repo name):(version)
+
+
+
+------>>> to copy the file in running container
+
+# docker cp {file-name} {container ID}:/{path}/{file-name}
+
+
+------>>>to save image in archive form 
+# docker save -o {name}.tar {image-name}
+ 
+------>>>> to load the image from the tar file
+# docker load -i webimage.tar          ------the name of the tar file
+
+
+
+
+
+------->>>>>>> Dockerfile for the tomcat <<<<<<<--------- 
+
+FROM centos:7
+RUN yum install java-openjdk -y
+#RUN {url of the appache tomcat 8.5}
+WORKDIR /mnt
+ADD {url of the appache tomcat 8.5} ./
+RUN tar -xzf {name appache tomcat}.tar.gz -C /opt/apache-tomcacat
+WORKDIR /opt/apache-tomcat/bin
+ENTRYPOINT [ "./catlina.sh", "run" ] 
+ 
+ -----------xxxx----- this script is for demo {not applied} -------xxxx-------
+
+
+------------ proxy web app --------------
+
+FROM centos:7
+RUN yum install httpd -y
+ADD https://s3-us-west-2.amazonaws.com/studentapi-cit/index.html /var/www/html/
+RUN chmod +r /var/www/html/index.html
+EXPOSE 80
+CMD [ "httpd", "-DFOREGROUND" ]
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+shellscript for docker to run the following command
+
+
+
+
+#!/bin/bash
+
+# Define variables
+IMAGE_NAME="my-image"
+IMAGE_TAG="v1.0"
+REGISTRY="my-registry"
+
+# Build the Docker image
+docker build -t $IMAGE_NAME .
+
+# List all Docker images
+docker images
+
+# Tag the Docker image with a version number
+docker tag $IMAGE_NAME $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+
+# Push the Docker image to a Docker registry
+docker push $REGISTRY/$IMAGE_NAME:$IMAGE_TAG
+
+------------------------------------------------------------------------------------------
+
+script with read variable
+
+
+
+
+#!/bin/bash
+
+# Ask the user for the image name
+read -p "Enter the image name: " image_name
+
+# Build the Docker image
+docker build -t $image_name .
+
+# List all Docker images
+docker images
+
+# Ask the user for the image tag
+read -p "Enter the image tag: " image_tag
+
+# Tag the Docker image with the user-specified tag
+docker tag $image_name $image_name:$image_tag
+
+# Ask the user for the Docker registry URL
+read -p "Enter the Docker registry URL: " registry_url
+
+# Push the Docker image to the user-specified registry
+docker push $registry_url/$image_name:$image_tag
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+
+
+
+the 2nd script with no-vaiables
+
+
+
+#!/bin/bash
+
+# Build the Docker image
+docker build -t my-image .
+
+# List all Docker images
+docker images
+
+# Tag the Docker image with a version number
+docker tag my-image my-image:v1.0
+
+# Push the Docker image to a Docker registry
+docker push my-registry/my-image:v1.0
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Create a volume for the web application
+docker volume create my-app
+
+# Run the web server container and mount the application volume
+docker run -d -p 80:80 --name web-server -v my-app:/usr/share/nginx/html nginx
+
+# Create a volume for logs
+docker volume create my-logs
+
+# Run the web server container again and mount the logs volume
+docker run -d -p 80:80 --name web-server-logs -v my-app:/usr/share/nginx/html -v my-logs:/var/log/nginx nginx
+
+
+
+In the above script, we first create a volume named my-app using the docker volume create command. This volume will be used to store our web application.
+Next, we start a Docker container using the nginx image and mount the my-app volume to the container's /usr/share/nginx/html directory. This will allow the container to serve the web application from the contents of the my-app volume. We also publish port 80 and give the container a name of web-server.
+Then we create another volume named my-logs using the docker volume create command. This volume will be used to store logs generated by the web server.
+Finally, we start another Docker container using the nginx image, mount both the my-app and my-logs volumes to the container, and give the container a different name of web-server-logs. This will allow the container to serve the web application from the my-app volume, and log files will be stored in the my-logs volume.

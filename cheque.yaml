@@ -1,0 +1,17 @@
+---
+- date: 2023-02-22
+  payee: rony arghode
+  amount: 1000
+  memo: Invoice payment
+  number: 001
+  address:
+    street: 404 Main St
+    city: Pune
+    state: Maharashtra
+    zip: '441107'
+  bank_info:
+    name: indian oversease bank
+    routing_number: 123456789
+    account_number: 987654321
+  signature: Rony aniket
+...

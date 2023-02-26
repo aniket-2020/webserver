@@ -1,0 +1,196 @@
+                                                                     DOCKER
+
+
+1.) yum update -y
+
+2.) yum install docker -y
+
+3.) which docker           ----- check if installed 
+
+4.) docker -v
+      (or)
+    docker  --version      ------ check the version
+
+5.) service docker status  ------ check if service stop or start
+ 
+6.) docker info            ------ will show info abt container
+
+7.) service docker start   ------ start docker 
+       (or)
+    systemctl start docker
+
+8.) docker images          ----- will show docker images in system
+
+9.) docker ps              ----- will show running containers
+
+10.) docker ps -a          ----- shows running and stopped containers
+
+11.) docker pull <image>   ----- will pull image from local machine then from dockerhub
+
+12.) docker create <image> ----- will only create image
+
+13) docker stop <containerid> ----- will stop the container
+
+13.1) docker start <container id> ----- will start stopped container
+
+13.2) docker attach <containerid> ----- will enter into container
+              (or)
+      docker exec -it <containerid> bash 
+
+13.3) cat /etc/os-release ----- will give info abt container-os (run inside a container)
+
+14.) docker search <image> ----- will search image on cli over internet
+
+14.1) docker run <imagename) ----- creates container 
+
+15.) docker create <image> -----   creates container from image pulled in system
+
+16.) docker rm <containerid> -----  deletes container
+
+17.) docker rmi <image>     -----   deletes image
+
+18.) docker run -it <image> -----  creates image and enters into it
+
+18.1) docker run -it --restart always <imageid> ----- creates container and keeps it up 
+ex-- when you restart docker it will stop all conatiners but container with this option would be up & running
+
+19.) docker run <imagename> -----  creates container in foreground
+
+20.) docker run -d <imagename> ----- creates & starts container in background
+
+20.1) docker run -dit <imagename> ----- will create container and run in background
+
+21.) docker inspect <containerid> ----- detailed info abt container including ip
+
+21.1) docker inspect <imageid>   ------ detailed info abt image including version
+
+22.) docker container prune      ----- remove all stopped containers
+
+22.1) docker image prune --all --force ----- delete all images
+
+23.) docker run -p -d 8080:80 httpd ----- container port forwarded of 80 to 8080     -------->>>>  <Ipaddress>:8080 ------->> you will see web page hosted in container
+
+24.) docker run -P -d httpd        ------ container port forwarded of 80 to random port
+
+25.)docker network create --subnet "192.168.0.0/16" first-net ---- created our network in container
+
+26.) docker run -d --network first-net nginx ----- ran container from our network ---->>alloctes IP in subnet range
+
+27.)docker kill $(docker ps -q)  ----- deleted all running containers 
+
+27.1)docker kill $(docker ps -q -a)  -----  (a-all) (q-quit)deleted all stopped containers 
+
+28.) docker volume create vol1 ---- created docker volume 
+
+29.) docker volume ls ----- list docker volumes
+
+30.) docker run -d -v vol1:/mnt nginx ----- vol1 mapped with /mnt (enter container & df -hT to check
+
+31.)
+
+
+
+========================================================================================
+
+                              DOCKER FILE 
+
+1.) yum update -y
+2.) yum install docker -y
+3.)serarch  install docker engine on centos on google to download docker repository in /etc/yum.repos.d
+
+yum install -y yum-utils
+
+sudo yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+
+4.) **********DOCKER FILE CONTENTS************
+    
+FROM centos
+MAINTAINER "saurabhsatpute2@gmail.com Saurabh Satpute"
+WORKDIR /
+RUN cd /etc/yum.repos.d/
+RUN sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-*
+RUN sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-*
+RUN yum update -y && \
+    yum install httpd net-tools bind-utils -y
+ENV whoworks saurabh
+COPY pet-shop-website-template  /var/www/html/
+COPY samplefile /mnt
+EXPOSE 80 443
+CMD ["/usr/sbin/httpd","-D","FOREGROUND"]
+
+************************END OF DOCKER FILE**********************
+   81  docker build -t tabluimage .
+   82  docker images
+   83  docker run --name tablu-container -dit -P --restart always tabluimage
+   84  docker ps -a
+   85  docker ps
+   86  docker exec -it <containerid> bash
+   87  docker ps
+   89  docker inspect <containerid>
+   90  curl 172.17.0.2
+
+5.) open port in sg
+
+6.) curl <ip of conatiner>   ------check inside machine
+
+7.) on chrome <ipaddress:49154>
+
+========================================================================================
+
+            HOSTING NODE.JS IN CONTAINER
+
+Link:- https://vishalsontakke2.blogspot.com/2022/12/how-to-deploy-nodejs-application-on-aws.html
+
+=========================================================================================
+
+                      HOSTING JAVA APPLICATION IN CONTAINER
+
+* Bulid three containers namely app server , webserver ,rds server
+
+                           ------------------
+                               APP SERVER
+                           ------------------
+1.)  yum update -y
+2.)  yum install docker -y
+3.)  yum-config-manager \
+    --add-repo \
+    https://download.docker.com/linux/centos/docker-ce.repo
+4.) ---------THIS WILL ENABLE LATEST DOCKER REPOSITORY--------- YOU HAVE TO DISABLE IT
+                   BY FIRING LAST COMMAND IN ERROR
+5.vim Dockerfile
+FROM centos:7
+MAINTAINER saurabh_satpute
+RUN yum update -y
+RUN yum install httpd -y
+EXPOSE 80
+COPY index.html /var/www/html/
+ENTRYPOINT ["/usr/sbin/httpd"]
+CMD ["-D", "FOREGROUND"]
+~                         
+6.)docker build -t app-image .
+7.) docker ps 
+8.)docker run -dit -p 4000:80 --name app-container app-image /bin/bash
+                          (or)
+   docker run -d -p 4000:80 --name app-container app-image
+9.)wget https://s3-us-west-2.amazonaws.com/studentapi-cit/index.html
+10.)docker cp index.html f221eb87146a:/var/www/html/
+11.)docker inspect <containerid>
+12.)curl 172.17.0.2
+13.)curl <ipaddress:4000>
+
+                               --------------------
+                      		     WEBSERVER
+                               ---------------------
+
+***** To set up webserver we have to follow following steps 
+      a> Install Java
+      b. Download Tomcat
+      c> Extract in opt
+      d> start catalina service
+
+
+
+
+

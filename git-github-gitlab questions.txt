@@ -1,0 +1,35 @@
+* Git questions 
+1.What is Git and why is it important for software development?
+2.What is a repository in Git?
+3.Can you explain the difference between Git and GitHub?
+4.What is a branch in Git and how do you create one?
+5.What is a merge conflict in Git and how do you resolve it?
+6.Can you explain the basic Git workflow?
+7.What is Git stash and how do you use it?
+8.How do you revert changes in Git?
+9.What is a pull request in GitHub and how do you create one?
+10.Can you explain the difference between Git fetch and Git pull?
+
+* GitHub questions1.What is GitHub and what role does it play in software development?
+2.Can you explain the difference between GitHub and Git?
+3.What is a repository in GitHub and how do you create one?
+4.How do you use GitHub for collaboration and version control?
+5.What is a pull request in GitHub and how do you create one?
+6.Can you explain the GitHub workflow for a team project?
+7.How do you use GitHub issues to track bugs and feature requests?
+8.What is GitHub Pages and how can you use it to host a website?
+9.How do you use GitHub Actions to automate your workflow?
+10.Can you explain the difference between a private and public repository on GitHub?
+
+* GitLab interview questions:
+1.What is GitLab and how does it differ from other Git hosting services like GitHub?
+2.How do you create a repository in GitLab?
+3.Can you explain the difference between GitLab Community Edition and GitLab Enterprise Edition?
+4.What are the key features of GitLab CI/CD and how do you use it?
+5.How do you manage access to your repositories in GitLab?
+6.How do you use GitLab Issues and GitLab Boards for project management?
+7.Can you explain how to set up a pipeline in GitLab CI/CD?
+8.How do you use GitLab's built-in continuous testing and code analysis tools?
+9.How do you integrate GitLab with other tools and services?
+10.Can you describe how to use GitLab for a team project and how it can improve collaboration?
+

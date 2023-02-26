@@ -1,0 +1,12 @@
+* Docker 
+
+1.What is Docker and why is it used in software development?
+2.Can you explain the differences between a container and a virtual machine?
+3.How do you create a Docker image and run a container?
+4.What is a Dockerfile and how do you use it to build a Docker image?
+5.How do you manage container volumes in Docker?
+6.Can you explain how to use Docker Compose to run multiple containers?
+7.How do you manage the network in Docker containers?
+8.Can you describe how to use Docker in a continuous integration and deployment pipeline?
+9.How do you troubleshoot problems with Docker containers and images?
+10.How do you monitor the performance and resource usage of Docker containers?

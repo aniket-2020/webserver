@@ -1,0 +1,34 @@
+nodeJs application deploy
+
+step1 -> launch ubuntu instance
+         allocate elastic IPs
+         security-- 1.ssh
+                    2.https
+                    3.custom-3000(unused port)
+step2 -> Install NodeJS and NPM using nvm
+         Install node version manager (nvm) by typing the following at the command line.
+
+   ****   curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash  ****
+step3 -> activate nvm
+         #. ~/.nvm/nvm.sh
+         #nvm install node
+step4 -> install git 
+         #apt update -y
+         #apt install git -y
+step5 -> download clone repository from the github
+         ***  git clone https://github.com/miroslavpejic85/mirotalk.git
+         
+       #cd mirotalk
+
+    copy .env.ta,plate to .env 
+      #cp .env.template .env
+
+step6 -> install npm dependencies 
+         #npm install
+         
+         #npm start
+step7 -> create route 53 ---hosted zone --add-certificate--add-record
+
+step8 -> create application load balancer --listener--https--secure listener--add certificate
+ 
+step9 -> route 53 --create record --add A --alis (on) --add application load balancer

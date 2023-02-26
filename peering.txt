@@ -1,0 +1,46 @@
+what is peering connection
+-vpc peering connection is a networking connection between two vpc's that enable
+you to route traffic between them using private IPv4 addresses
+
+peering connection can create when two vpc have different IP range 
+same ip address can't create the peering conection
+
+practical A-B-C (peering connection)
+
+{ for A
+   * create vpc --range --create
+   * subnet --public subnet --
+            --private subnet --
+   * internet_gateway --public --attach vpc
+   * select default route_table --subnet associate --public
+                                --routes--edit--0.0.0.0/0 internet_gateway
+ 
+   * launch ec2 instance --(1)public --security--all ICMP
+                         --(2)private --security--all ICMP
+ 
+    get the access of public and ssh of privatr (drag and drop key)
+
+
+{ for B 
+   * create vpc --range --create
+   * subnet --private subnet
+   * routes --entry of subnet in route table
+
+make peering connection (in A )
+------peering connection --create --name --select vpc_id --my account --region(another region)--region name--another region vpc id --create
+**go to another region B**
+accept the request in peering connection--action--accept
+
+***in A **
+routes --edit routes --private subnet CIDR (in B)--peering connection --save
+
+***in B **
+routes --edit routes --private subnet CIDR (in A)--peering connection --save
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------------------------------------------------------
+{ for c 
+  * create vpc --range --create
+  * subnet --private subnet
+  * route --entry of subnet in route table

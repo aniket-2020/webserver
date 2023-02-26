@@ -1,0 +1,55 @@
+deploy java application in appache tomcat 8.5 (port=8080)
+
+
+****link (you can download the web application)
+                    
+                  http://s3-us-west-2.amazonaws.com/studentapi-cit/
+
+Steps to host JAVA application (student.war):
+
+STEP1: Install JAVA
+STEP2: Download Tomcat  {from the tomcat official website (download the zip file and extract in /opt )}
+STEP3: Start the tomcat service {not using systemctl, use bin dir. command catlina.sh) eg.(./catlina.sh start)
+STEP4: deploy application in webapps {go the s3 link and copy link address and use wget command and download in webapps(i.e. the root dir of tomcat)
+
+ *********check the page on web (ipadd:8080/student)***********
+
+then make your website dynamic (store the data )
+
+Steps to connect Tomcat with DB server:
+- STEP1: Download and store mysql-connector.jar into lib
+ - STEP2: Configure TOMCAT for connecting DB {path /opt/conf/context.xml)
+
+*****paste that data in <context>*********
+
+    <Resource name="jdbc/TestDB" auth="Container" type="javax.sql.DataSource"
+               maxTotal="100" maxIdle="30" maxWaitMillis="10000"
+               username="admin" password="redhat123" driverClassName="com.mysql.jdbc.Driver"
+               url="jdbc:mysql://****endpoint of database******:3306/student"/>
+
+
+____________________________________________________________________________________________________________
+
+
+#yum install mariadb mariadb-server
+#systemctl start mariadb
+#mysql -u admin -h (endpoint of db) -p(password)
+->show databases;
+->create database studentapp;
+>>>>>>>>>>>>>>>>>>>this is the scheme of studentapp (body or struture)<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,
+
+      use studentapp;
+      CREATE TABLE if not exists students(student_id INT NOT NULL AUTO_INCREMENT,
+	    student_name VARCHAR(100) NOT NULL,
+          student_addr VARCHAR(100) NOT NULL,
+	    student_age VARCHAR(3) NOT NULL,
+	    student_qual VARCHAR(20) NOT NULL,
+	    student_percent VARCHAR(10) NOT NULL,
+	    student_year_passed VARCHAR(10) NOT NULL,
+	    PRIMARY KEY (student_id)
+      );
+
+
+
+
+ -_____________: Restart Tomcat____________________________( use ./bin/catlina.sh stop          and       ./bin/catlina.sh start )

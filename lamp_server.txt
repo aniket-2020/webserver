@@ -1,0 +1,6 @@
+************  lamp_server ****************
+
+what is use of LAMP -----
+   You can use this server to host a static website or deploy a dynamic PHP application that reads and writes information to a database.
+ 
+  Step 1: Launch an instance----security group---SSH (port 22), HTTP (port 80), and HTTPS (port 443) 

@@ -1,0 +1,24 @@
+remove grub2 dir. in instance so instance can get acces and the status error is 1/2 
+ 
+
+how to recover from that error 
+
+(1) stop the instance --detach --volume
+(2) create and launch new instance with ----- name--**( rescue_insta) with differnt AMI (because the UUID of that volume is different)
+(3) create one another instance --name--**( proxy_insta ) with same AMI as 1st instance
+ 
+step -- stop rescue_insta --detach--volume 
+step -- attach the volume of rescue_insta to the proxy_insta (in secondry disk)
+step -- mount on /mnt --
+        mkdir on mnt (for save the grub2 )
+step -- unmount rescue_insta volume
+        detach the volume
+step -- attach to the rescue_insta root volume
+     -- get the access and check the dir that have grub2
+step -- attach volume of error_instance to the rescue_insta to secondry disk
+     -- mount on /mnt
+     -- copy the grub2 dir to boot
+step -- detach the volume and attach to the error_instance in root disk
+
+
+****now start the instance and get the access******

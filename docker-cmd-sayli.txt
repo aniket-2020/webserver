@@ -1,0 +1,20 @@
+    1  yum install docker -y  ----it install the docker engine 
+    2  docker start service    --it start the service
+    3  service docker status   --it check the status
+    4  service docker start
+    5  service docker status
+    6  docker pull ubantu     --it pull the image from docker hub 
+    8  docker search ubuntu   -- it search the image from the docker hub
+    9  docker search centos
+   10  docker pull centos
+   11  docker images          ---it show all the images in your local engine or in our computer 
+   12  docker run -it centos /bin/bash ----it use to create the container and give the entry into the container 
+   13  docker ps  ----it will used to see all the running container 
+   14  docker ps -a  --it will used to see all the running and stopped container
+   15  docker start 0972c59accdd (container id or name) ---it will start the container
+   16  docker ps    
+   17  docker attach 0972c59accdd   ---it will give the entry into the container 
+   18  docker images    
+   19  docker commit 0972c59accdd(container id) newimage ---it will create a newimage from container  
+   20  docker images
+   21  docker run -it --name sayalicon newimage /bin/bash  ----it will create a container from image (new image)

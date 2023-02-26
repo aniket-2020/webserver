@@ -1,0 +1,37 @@
+how to setup reverse proxy on aws instance
+
+To set up a reverse proxy on an Amazon Web Services (AWS) EC2 instance, you can use a web server software such as Apache or Nginx. Here are the general steps to set up a reverse proxy using Nginx:
+
+Launch an EC2 instance and log in to it via SSH.
+
+Install Nginx:
+sudo apt-get update
+sudo apt-get install nginx
+
+Create a new Nginx virtual host configuration file for the reverse proxy. For example, you can create a file at /etc/nginx/sites-available/reverse_proxy.conf with the following contents:
+
+server {
+    listen 80;
+    server_name example.com;
+    location / {
+        proxy_pass http://origin_server_ip_or_hostname:origin_server_port;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+}
+
+Replace example.com with the domain name you want to use for your reverse proxy, and origin_server_ip_or_hostname:origin_server_port with the IP address or hostname and port of the origin server.
+
+Enable the virtual host by creating a symbolic link from the sites-available directory to the sites-enabled directory:
+
+sudo ln -s /etc/nginx/sites-available/reverse_proxy.conf /etc/nginx/sites-enabled/
+
+Test the Nginx configuration:
+
+sudo nginx -t
+
+Restart Nginx to apply the changes:
+sudo service nginx restart
+
+
+erify that the reverse proxy is working by accessing it from a web browser using the public IP address or hostname of your EC2 instance. Requests to the reverse proxy should be transparently forwarded to the origin server.
